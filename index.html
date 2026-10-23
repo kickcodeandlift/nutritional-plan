@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Nutrition">
+<meta name="robots" content="noindex, nofollow">
 <title>Nutrition Plan</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -20,7 +21,6 @@
     --text3: #56554f;
     --accent: #c8f060;
     --accent-dim: rgba(200,240,96,0.12);
-    --accent-text: #3a5200;
     --blue: #60b4f0;
     --blue-dim: rgba(96,180,240,0.12);
     --orange: #f0a060;
@@ -45,40 +45,20 @@
 
   /* NAV */
   .nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
+    position: fixed; bottom: 0; left: 0; right: 0;
     background: var(--surface);
     border-top: 1px solid var(--border);
-    display: flex;
-    z-index: 100;
+    display: flex; z-index: 100;
     padding-bottom: env(safe-area-inset-bottom);
   }
   .nav-btn {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    padding: 12px 0 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text3);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: .03em;
-    transition: color .2s;
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 12px 0 10px; background: none; border: none; cursor: pointer;
+    color: var(--text3); font-family: 'DM Sans', sans-serif;
+    font-size: 10px; font-weight: 500; letter-spacing: .03em; transition: color .2s;
   }
   .nav-btn.active { color: var(--accent); }
-  .nav-icon {
-    width: 22px; height: 22px;
-    stroke: currentColor;
-    stroke-width: 1.6;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
+  .nav-icon { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
   /* PAGES */
   .page { display: none; padding: 0 0 1rem; }
@@ -88,362 +68,126 @@
   .page-header {
     padding: 56px 20px 20px;
     background: linear-gradient(180deg, #1a1a1c 0%, transparent 100%);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   }
-  .page-title {
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: -.02em;
-    line-height: 1.1;
-  }
-  .page-sub {
-    font-size: 13px;
-    color: var(--text2);
-    margin-top: 4px;
-  }
+  .page-title { font-size: 26px; font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
+  .page-sub { font-size: 13px; color: var(--text2); margin-top: 4px; }
 
   /* DAY TOGGLE */
-  .day-toggle {
-    display: flex;
-    gap: 8px;
-    padding: 0 20px 16px;
-  }
+  .day-toggle { display: flex; gap: 8px; padding: 0 20px 16px; }
   .day-btn {
-    flex: 1;
-    padding: 10px 8px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text2);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    text-align: center;
-    line-height: 1.3;
-    transition: all .2s;
+    flex: 1; padding: 10px 8px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--surface); color: var(--text2);
+    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+    cursor: pointer; text-align: center; line-height: 1.3; transition: all .2s;
   }
-  .day-btn.active {
-    background: var(--accent-dim);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
+  .day-btn.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 
   /* TOTALS */
-  .totals-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 0 20px 20px;
-  }
-  .total-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-  }
-  .total-label {
-    font-size: 11px;
-    color: var(--text2);
-    font-weight: 500;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .total-value {
-    font-family: 'DM Mono', monospace;
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1;
-  }
-  .total-unit {
-    font-size: 13px;
-    color: var(--text2);
-    font-weight: 400;
-    font-family: 'DM Sans', sans-serif;
-    margin-left: 2px;
-  }
+  .totals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px 20px; }
+  .total-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+  .total-label { font-size: 11px; color: var(--text2); font-weight: 500; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 4px; }
+  .total-value { font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500; color: var(--text); line-height: 1; }
+  .total-unit { font-size: 13px; color: var(--text2); font-weight: 400; font-family: 'DM Sans', sans-serif; margin-left: 2px; }
+  .total-target { font-size: 11px; color: var(--text3); margin-top: 6px; font-family: 'DM Mono', monospace; }
 
   /* MEAL CARDS */
   .meals-list { padding: 0 20px; }
-  .meal-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: 12px;
-    overflow: hidden;
-  }
-  .meal-top {
-    padding: 14px 16px 10px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 8px;
-  }
-  .meal-name {
-    font-size: 15px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .meal-tag {
-    font-size: 10px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: 20px;
-    background: var(--accent-dim);
-    color: var(--accent);
-    letter-spacing: .02em;
-  }
-  .meal-macros {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-  .mpill {
-    font-size: 10px;
-    font-weight: 500;
-    font-family: 'DM Mono', monospace;
-    padding: 2px 7px;
-    border-radius: 20px;
-  }
+  .meal-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; }
+  .meal-top { padding: 14px 16px 10px; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .meal-name { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .meal-time { font-size: 11px; color: var(--text3); font-weight: 400; margin-top: 3px; }
+  .meal-tag { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; background: var(--accent-dim); color: var(--accent); letter-spacing: .02em; }
+  .meal-macros { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+  .mpill { font-size: 10px; font-weight: 500; font-family: 'DM Mono', monospace; padding: 2px 7px; border-radius: 20px; }
   .mpill-cal { background: var(--surface2); color: var(--text2); }
   .mpill-p { background: var(--accent-dim); color: var(--accent); }
   .mpill-c { background: var(--blue-dim); color: var(--blue); }
   .mpill-f { background: var(--orange-dim); color: var(--orange); }
 
   /* OPT TOGGLE */
-  .opt-toggle {
-    display: flex;
-    gap: 6px;
-    padding: 0 16px 10px;
-  }
+  .opt-toggle { display: flex; gap: 6px; padding: 0 16px 10px; }
   .opt-btn {
-    font-size: 11px;
-    font-weight: 600;
-    font-family: 'DM Mono', monospace;
-    padding: 3px 14px;
-    border-radius: 20px;
-    border: 1px solid var(--border2);
-    background: transparent;
-    cursor: pointer;
-    color: var(--text2);
-    transition: all .15s;
+    font-size: 11px; font-weight: 600; font-family: 'DM Mono', monospace;
+    padding: 3px 14px; border-radius: 20px; border: 1px solid var(--border2);
+    background: transparent; cursor: pointer; color: var(--text2); transition: all .15s;
   }
-  .opt-btn.active {
-    background: var(--text);
-    color: var(--bg);
-    border-color: var(--text);
-  }
+  .opt-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
   /* ITEM LIST */
-  .item-list {
-    border-top: 1px solid var(--border);
-    list-style: none;
-  }
+  .item-list { border-top: 1px solid var(--border); list-style: none; }
   .item-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 9px 16px;
-    font-size: 13px;
-    color: var(--text2);
-    border-bottom: 1px solid var(--border);
-    gap: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 16px; font-size: 13px; color: var(--text2);
+    border-bottom: 1px solid var(--border); gap: 8px;
   }
   .item-list li:last-child { border-bottom: none; }
-  .item-list li span.kcal {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--text3);
-    white-space: nowrap;
-  }
+  .item-list li span.kcal { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3); white-space: nowrap; }
+  .opt-note { padding: 8px 16px 12px; font-size: 11px; color: var(--text3); border-top: 1px solid var(--border); }
 
-  /* SUPPLEMENTS PAGE */
+  /* GENERIC BLOCKS (supps + guide) */
   .supp-block { padding: 0 20px; margin-bottom: 20px; }
-  .supp-time-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--text2);
-    margin-bottom: 8px;
-    padding-left: 2px;
-  }
-  .supp-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .supp-row {
-    display: flex;
-    align-items: center;
-    padding: 11px 16px;
-    border-bottom: 1px solid var(--border);
-    gap: 10px;
-  }
+  .supp-time-label { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); margin-bottom: 8px; padding-left: 2px; }
+  .supp-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .supp-row { display: flex; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); gap: 10px; }
   .supp-row:last-child { border-bottom: none; }
-  .supp-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex-shrink: 0;
-  }
-  .supp-name {
-    flex: 1;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  .supp-note {
-    font-size: 11px;
-    color: var(--text3);
-    margin-top: 1px;
-  }
+  .supp-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .supp-dot.blue { background: var(--blue); }
+  .supp-dot.orange { background: var(--orange); }
+  .supp-dot.purple { background: var(--purple); }
+  .supp-name { font-size: 14px; font-weight: 500; }
+  .supp-note { font-size: 11px; color: var(--text3); margin-top: 1px; line-height: 1.4; }
+  .supp-main { flex: 1; min-width: 0; }
   .supp-dose {
-    font-size: 11px;
-    font-weight: 500;
-    font-family: 'DM Mono', monospace;
-    padding: 3px 9px;
-    border-radius: 20px;
-    background: var(--purple-dim);
-    color: var(--purple);
-    white-space: nowrap;
+    font-size: 11px; font-weight: 500; font-family: 'DM Mono', monospace;
+    padding: 3px 9px; border-radius: 20px; background: var(--purple-dim); color: var(--purple); white-space: nowrap;
+  }
+  .supp-dose.green { background: var(--accent-dim); color: var(--accent); }
+  .supp-dose.blue { background: var(--blue-dim); color: var(--blue); }
+  .supp-dose.orange { background: var(--orange-dim); color: var(--orange); }
+  .info-card {
+    margin: 0 20px 20px; padding: 14px 16px; border-radius: var(--radius);
+    background: var(--orange-dim); border: 1px solid rgba(240,160,96,0.3);
+    font-size: 12px; color: var(--orange); line-height: 1.5;
   }
 
   /* GROCERY PAGE */
   .grocery-header { padding: 0 20px 16px; }
-  .progress-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-  }
-  .prog-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .prog-count {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text2);
-  }
-  .prog-pct {
-    font-family: 'DM Mono', monospace;
-    font-size: 14px;
-    color: var(--accent);
-  }
-  .prog-track {
-    height: 4px;
-    background: var(--surface2);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .prog-fill {
-    height: 4px;
-    background: var(--accent);
-    border-radius: 4px;
-    transition: width .3s ease;
-  }
+  .progress-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+  .prog-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .prog-count { font-size: 13px; font-weight: 500; color: var(--text2); }
+  .prog-pct { font-family: 'DM Mono', monospace; font-size: 14px; color: var(--accent); }
+  .prog-track { height: 4px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .prog-fill { height: 4px; background: var(--accent); border-radius: 4px; transition: width .3s ease; }
 
   .grocery-cat { padding: 0 20px; margin-bottom: 20px; }
-  .cat-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--text2);
-    margin-bottom: 8px;
-    padding-left: 2px;
-  }
-  .grocery-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
+  .cat-label { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); margin-bottom: 8px; padding-left: 2px; }
+  .grocery-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
   .grocery-row {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
-    cursor: pointer;
-    transition: background .15s;
-    user-select: none;
+    display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border);
+    gap: 12px; cursor: pointer; transition: background .15s; user-select: none;
   }
   .grocery-row:last-child { border-bottom: none; }
   .grocery-row:active { background: var(--surface2); }
   .grocery-row.checked { opacity: .45; }
   .g-check {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border2);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    transition: all .15s;
+    width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border2);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .15s;
   }
-  .grocery-row.checked .g-check {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-  .g-check svg {
-    display: none;
-    width: 11px; height: 11px;
-    stroke: var(--bg);
-    stroke-width: 2.5;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
+  .grocery-row.checked .g-check { background: var(--accent); border-color: var(--accent); }
+  .g-check svg { display: none; width: 11px; height: 11px; stroke: var(--bg); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
   .grocery-row.checked .g-check svg { display: block; }
   .g-info { flex: 1; min-width: 0; }
-  .g-name {
-    font-size: 14px;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  .g-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .grocery-row.checked .g-name { text-decoration: line-through; }
-  .g-note {
-    font-size: 11px;
-    color: var(--text3);
-    margin-top: 1px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .g-qty {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--text2);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
+  .g-note { font-size: 11px; color: var(--text3); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .g-qty { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); white-space: nowrap; flex-shrink: 0; }
   .reset-btn {
-    display: block;
-    margin: 8px 20px 0;
-    width: calc(100% - 40px);
-    padding: 13px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    color: var(--text2);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background .15s;
+    display: block; margin: 8px 20px 0; width: calc(100% - 40px); padding: 13px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: background .15s;
   }
   .reset-btn:active { background: var(--surface2); }
 </style>
@@ -454,30 +198,39 @@
 <div class="page active" id="page-meals">
   <div class="page-header">
     <div class="page-title">Meal Plan</div>
-    <div class="page-sub">Tap A / B to switch options</div>
+    <div class="page-sub">Cut · Weeks 1–6 · tap A / B / C to switch</div>
   </div>
-  <div class="day-toggle">
-    <button class="day-btn active" onclick="switchDay('rest')">Rest days<br><span style="font-size:11px;opacity:.7">Tue & Wed</span></button>
-    <button class="day-btn" onclick="switchDay('training')">Training days<br><span style="font-size:11px;opacity:.7">Mon Thu Fri Sat Sun</span></button>
+  <div class="day-toggle" id="meal-toggle">
+    <button class="day-btn" data-day="gym" onclick="switchDay('gym')">Gym days<br><span style="font-size:11px;opacity:.7">Mon · Wed · Fri · Sat</span></button>
+    <button class="day-btn" data-day="rest" onclick="switchDay('rest')">Rest days<br><span style="font-size:11px;opacity:.7">Tue · Thu · Sun</span></button>
   </div>
   <div class="totals-grid">
-    <div class="total-card"><div class="total-label">Calories</div><div class="total-value" id="t-cal">—<span class="total-unit">kcal</span></div></div>
-    <div class="total-card"><div class="total-label">Protein</div><div class="total-value" id="t-pro">—<span class="total-unit">g</span></div></div>
-    <div class="total-card"><div class="total-label">Carbs</div><div class="total-value" id="t-carb">—<span class="total-unit">g</span></div></div>
-    <div class="total-card"><div class="total-label">Fat</div><div class="total-value" id="t-fat">—<span class="total-unit">g</span></div></div>
+    <div class="total-card"><div class="total-label">Calories</div><div class="total-value" id="t-cal">—</div><div class="total-target" id="tt-cal"></div></div>
+    <div class="total-card"><div class="total-label">Protein</div><div class="total-value" id="t-pro">—</div><div class="total-target" id="tt-pro"></div></div>
+    <div class="total-card"><div class="total-label">Carbs</div><div class="total-value" id="t-carb">—</div><div class="total-target" id="tt-carb"></div></div>
+    <div class="total-card"><div class="total-label">Fat</div><div class="total-value" id="t-fat">—</div><div class="total-target" id="tt-fat"></div></div>
   </div>
   <div class="meals-list" id="meals-list"></div>
+</div>
+
+<!-- GUIDE PAGE -->
+<div class="page" id="page-guide">
+  <div class="page-header">
+    <div class="page-title">Guide</div>
+    <div class="page-sub">Rules & swaps</div>
+  </div>
+  <div id="guide-list"></div>
 </div>
 
 <!-- SUPPLEMENTS PAGE -->
 <div class="page" id="page-supps">
   <div class="page-header">
     <div class="page-title">Supplements</div>
-    <div class="page-sub" id="supp-sub">Daily protocol</div>
+    <div class="page-sub">Daily protocol</div>
   </div>
-  <div class="day-toggle">
-    <button class="day-btn active" onclick="switchSuppDay('rest')">Rest days<br><span style="font-size:11px;opacity:.7">Tue & Wed</span></button>
-    <button class="day-btn" onclick="switchSuppDay('training')">Training days<br><span style="font-size:11px;opacity:.7">Mon Thu Fri Sat Sun</span></button>
+  <div class="day-toggle" id="supp-toggle">
+    <button class="day-btn" data-day="gym" onclick="switchSuppDay('gym')">Gym days<br><span style="font-size:11px;opacity:.7">Mon · Wed · Fri · Sat</span></button>
+    <button class="day-btn" data-day="rest" onclick="switchSuppDay('rest')">Rest days<br><span style="font-size:11px;opacity:.7">Tue · Thu · Sun</span></button>
   </div>
   <div id="supps-list"></div>
 </div>
@@ -486,7 +239,7 @@
 <div class="page" id="page-grocery">
   <div class="page-header">
     <div class="page-title">Grocery List</div>
-    <div class="page-sub">Weekly shop · tap to check off</div>
+    <div class="page-sub">Weekly shop · 4 gym + 3 rest days · tap to check off</div>
   </div>
   <div class="grocery-header">
     <div class="progress-wrap">
@@ -507,6 +260,10 @@
     <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     Meals
   </button>
+  <button class="nav-btn" onclick="showPage('guide',this)">
+    <svg class="nav-icon" viewBox="0 0 24 24"><path d="M4 4h12a4 4 0 014 4v12H8a4 4 0 01-4-4z"/><path d="M8 9h8M8 13h6"/></svg>
+    Guide
+  </button>
   <button class="nav-btn" onclick="showPage('supps',this)">
     <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 1 4 4v1H8V6a4 4 0 0 1 4-4z"/><rect x="6" y="7" width="12" height="14" rx="2"/><path d="M9 12h6M9 16h4"/></svg>
     Supplements
@@ -518,406 +275,430 @@
 </nav>
 
 <script>
-const F={cal:80,p:1,c:19,f:0};
-const F2={cal:160,p:2,c:38,f:0};
+/* ---------- FOOD DATABASE (cereals & garlic rice from labels; others approx.) ---------- */
+const FD = {
+  wpi1:      {name:"1 scoop WPI",                         cal:115, p:26,   c:1,    f:0.5},
+  wpi2:      {name:"2 scoops WPI",                        cal:230, p:52.4, c:2,    f:1},
+  fibre24:   {name:"24g All-Bran Flakes (wheat or honey almond)", cal:88, p:2.8, c:14.5, f:1.1},
+  cnut36:    {name:"36g Crunchy Nut",                     cal:145, p:2.5,  c:29.1, f:1.6},
+  cnut20:    {name:"20g Crunchy Nut",                     cal:80,  p:1.4,  c:16.1, f:0.9},
+  mix40:     {name:"40g cereal mix (16g All-Bran Flakes + 24g Crunchy Nut)", cal:155, p:3.5, c:29,   f:1.8},
+  banana:    {name:"Fruit portion · banana or swap",      cal:100, p:1,    c:25,   f:0.3},
+  kiwis:     {name:"Fruit portion · 2 kiwis or swap",     cal:90,  p:1.5,  c:20,   f:0.5},
+  blue150:   {name:"150g blueberries or fruit swap",      cal:86,  p:1,    c:22,   f:0.5},
+  yog200:    {name:"200g Greek yoghurt",                  cal:120, p:19,   c:9,    f:1},
+  yog170:    {name:"170g Greek yoghurt",                  cal:102, p:16,   c:7.6,  f:0.9},
+  chick150:  {name:"150g chicken breast (cooked)",        cal:248, p:46.5, c:0,    f:5.4},
+  chick180:  {name:"180g chicken or lean beef (cooked)",  cal:297, p:56,   c:0,    f:6.5},
+  chick200:  {name:"200g chicken or lean beef (cooked)",  cal:330, p:62,   c:0,    f:7.2},
+  garlic:    {name:"250g Ben's garlic rice pouch (whole pack)", cal:406, p:8, c:79.6, f:5},
+  salad:     {name:"Salad",                               cal:30,  p:2,    c:5,    f:0},
+  veg:       {name:"Veg (fresh or frozen mix)",           cal:40,  p:2,    c:6,    f:0},
+  oil10:     {name:"10g olive oil (or fat swap)",         cal:90,  p:0,    c:0,    f:10},
+  pot200:    {name:"200g potato · or 160g frozen fries (skip the oil) · or ½ rice pouch", cal:154, p:4, c:34, f:0.2},
+  pot150:    {name:"150g potato · or 130g frozen fries (skip the oil) · or ~90g rice",   cal:116, p:3,    c:26,   f:0.2},
+  cor40:     {name:"40g cream of rice (dry)",             cal:145, p:2.5,  c:32,   f:0.3},
+  pb15:      {name:"15g peanut butter",                   cal:95,  p:4,    c:2,    f:7.5},
+  salmon150: {name:"150g salmon (cooked)",                cal:310, p:37,   c:0,    f:18},
+  rice150:   {name:"150g cooked rice",                    cal:195, p:4,    c:42,   f:0.4},
+  ricecake2: {name:"2 rice cakes",                        cal:75,  p:2,    c:16,   f:0.5},
+  popcorn40: {name:"40g popcorn · 2 small multipack bags",cal:190, p:3,    c:22,   f:9},
+  mchef:     {name:"Muscle Chef meal (≥40g P, ≤600 kcal)",cal:500, p:45,   c:45,   f:15},
+  eggs3:     {name:"3 whole eggs",                        cal:225, p:19,   c:1.2,  f:15},
+  eggs2:     {name:"2 whole eggs",                        cal:150, p:12.6, c:0.8,  f:10},
+  whites300: {name:"300g liquid egg whites (carton)",     cal:156, p:33,   c:2.1,  f:0.6},
+  omveg:     {name:"Omelette veg · spinach, tomato, mushroom", cal:40, p:2, c:6, f:0},
+  toast2:    {name:"Bread · 2 slices (wholegrain or white) — see bread swaps", cal:165, p:6, c:28, f:2},
+  toast1:    {name:"Bread · 1 slice (wholegrain or white) — see bread swaps",  cal:83,  p:3, c:14, f:1},
+  muffin1:   {name:"1 Amino Z Muscle Muffin",             cal:230, p:20,   c:26.6, f:4.4},
+  muffin2:   {name:"2 Amino Z Muscle Muffins",            cal:460, p:40,   c:53.2, f:8.8},
+};
+const I = (k, name) => name ? Object.assign({}, FD[k], {name}) : FD[k];
 
-const plans={
-  rest:{
-    meals:[
-      {id:1,title:"Meal 1",options:[
-        {label:"A",items:[
-          {name:"2 slices bread",cal:160,p:6,c:28,f:2},
-          {name:"2 whole eggs",cal:140,p:12,c:1,f:10},
-          {name:"2 egg whites",cal:34,p:7,c:0,f:0},
-          {name:"Fruit portion",cal:F.cal,p:F.p,c:F.c,f:F.f},
-        ]},
-        {label:"B",items:[
-          {name:"30g whey",cal:120,p:24,c:3,f:2},
-          {name:"40g oats / rice flour / bread",cal:150,p:5,c:26,f:3},
-          {name:"Fruit portion",cal:F.cal,p:F.p,c:F.c,f:F.f},
-          {name:"15g cashew / almond butter",cal:90,p:3,c:3,f:8},
-        ]}
-      ]},
-      {id:2,title:"Meal 2",options:[
-        {label:"A",items:[
-          {name:"50g whey",cal:200,p:40,c:5,f:3},
-          {name:"150g yoghurt",cal:90,p:9,c:8,f:2},
-          {name:"Fruit portion",cal:F.cal,p:F.p,c:F.c,f:F.f},
-        ]}
-      ]},
-      {id:3,title:"Meal 3",options:[
-        {label:"A",items:[
-          {name:"200g chicken / fish / lean meat",cal:220,p:44,c:0,f:4},
-          {name:"200g rice / pasta · 300g potato",cal:260,p:5,c:54,f:1},
-          {name:"Salad",cal:20,p:1,c:3,f:0},
-          {name:"100g avocado or 10g olive oil",cal:160,p:2,c:6,f:15},
-        ]}
-      ]},
-      {id:4,title:"Meal 4",options:[
-        {label:"A",items:[
-          {name:"2 slices bread / 54g oats / roll",cal:160,p:6,c:28,f:2},
-          {name:"1 slice mozzarella",cal:70,p:5,c:0,f:5},
-          {name:"1 whole egg",cal:70,p:6,c:0,f:5},
-          {name:"2 egg whites",cal:34,p:7,c:0,f:0},
-          {name:"Fruit portion",cal:F.cal,p:F.p,c:F.c,f:F.f},
-        ]},
-        {label:"B",items:[
-          {name:"30g whey",cal:120,p:24,c:3,f:2},
-          {name:"40g oats / rice flour / bread",cal:150,p:5,c:26,f:3},
-          {name:"Fruit portion",cal:F.cal,p:F.p,c:F.c,f:F.f},
-          {name:"15g cashew / almond butter",cal:90,p:3,c:3,f:8},
-        ]}
-      ]},
-      {id:5,title:"Meal 5",options:[
-        {label:"A",items:[
-          {name:"200g chicken / fish / lean meat",cal:220,p:44,c:0,f:4},
-          {name:"150g rice · 255g potato",cal:195,p:4,c:40,f:1},
-          {name:"Salad",cal:20,p:1,c:3,f:0},
-          {name:"100g avocado",cal:160,p:2,c:6,f:15},
-        ]},
-        {label:"B",items:[
-          {name:"2 slices bread / Vietnamese roll",cal:160,p:6,c:28,f:2},
-          {name:"2 slices cheese / 100g cream cheese",cal:140,p:8,c:2,f:11},
-          {name:"150g chicken / fish / lean meat",cal:165,p:33,c:0,f:3},
-          {name:"Salad",cal:20,p:1,c:3,f:0},
-          {name:"½ fruit portion",cal:40,p:1,c:10,f:0},
-        ]}
-      ]}
-    ]
-  },
-  training:{
-    meals:[
-      {id:1,title:"Meal 1",options:[
-        {label:"A",items:[
-          {name:"2 slices bread / 54g oats / roll",cal:160,p:6,c:28,f:2},
-          {name:"2 whole eggs",cal:140,p:12,c:1,f:10},
-          {name:"2 egg whites",cal:34,p:7,c:0,f:0},
-          {name:"Fruit portion",cal:F.cal,p:F.p,c:F.c,f:F.f},
-          {name:"20g granola / cereal",cal:80,p:2,c:14,f:2},
-        ]},
-        {label:"B",items:[
-          {name:"50g oats / 47g rice flour / 2 slices bread",cal:190,p:6,c:34,f:3},
-          {name:"2 whole eggs",cal:140,p:12,c:1,f:10},
-          {name:"2 egg whites",cal:34,p:7,c:0,f:0},
-          {name:"Fruit portion",cal:F.cal,p:F.p,c:F.c,f:F.f},
-          {name:"20g granola / cereal",cal:80,p:2,c:14,f:2},
-        ]}
-      ]},
-      {id:2,title:"Meal 2",options:[
-        {label:"A",items:[
-          {name:"50g whey",cal:200,p:40,c:5,f:3},
-          {name:"40g cereal / rice flour / rice cracker",cal:150,p:3,c:30,f:1},
-          {name:"150g yoghurt",cal:90,p:9,c:8,f:2},
-        ]}
-      ]},
-      {id:3,title:"Meal 3",options:[
-        {label:"A",items:[
-          {name:"200g chicken / fish / lean meat",cal:220,p:44,c:0,f:4},
-          {name:"250g rice · 375g potato / sweet potato",cal:325,p:6,c:68,f:1},
-          {name:"Salad",cal:20,p:1,c:3,f:0},
-          {name:"10g olive oil / 100g avocado",cal:90,p:1,c:3,f:9},
-        ]}
-      ]},
-      {id:4,title:"Meal 4",tag:"Pre-workout",options:[
-        {label:"A",items:[
-          {name:"2 slices bread / 54g oats / roll",cal:160,p:6,c:28,f:2},
-          {name:"1 slice cheese",cal:70,p:5,c:0,f:5},
-          {name:"1 whole egg",cal:70,p:6,c:0,f:5},
-          {name:"2 egg whites",cal:34,p:7,c:0,f:0},
-          {name:"Fruit portion",cal:F.cal,p:F.p,c:F.c,f:F.f},
-          {name:"20g granola / cereal",cal:80,p:2,c:14,f:2},
-        ]},
-        {label:"B",items:[
-          {name:"30g whey",cal:120,p:24,c:3,f:2},
-          {name:"50g rice flour",cal:180,p:4,c:38,f:1},
-          {name:"Fruit portion",cal:F.cal,p:F.p,c:F.c,f:F.f},
-          {name:"10g honey",cal:30,p:0,c:8,f:0},
-        ]}
-      ]},
-      {id:5,title:"Meal 5",tag:"Post-workout",options:[
-        {label:"A",items:[
-          {name:"200g chicken / fish / lean meat",cal:220,p:44,c:0,f:4},
-          {name:"250g rice · 375g potato / sweet potato",cal:325,p:6,c:68,f:1},
-          {name:"Salad",cal:20,p:1,c:3,f:0},
-          {name:"10g olive oil / 100g avocado",cal:90,p:1,c:3,f:9},
-        ]},
-        {label:"B",items:[
-          {name:"2 slices bread / 54g oats / roll",cal:160,p:6,c:28,f:2},
-          {name:"20g cream cheese / 2 slices cheese",cal:70,p:4,c:1,f:6},
-          {name:"150g chicken / fish / lean meat",cal:165,p:33,c:0,f:3},
-          {name:"Salad",cal:20,p:1,c:3,f:0},
-          {name:"2 fruit portions",cal:F2.cal,p:F2.p,c:F2.c,f:F2.f},
-        ]}
-      ]}
-    ]
-  }
+const TARGETS = {
+  gym:  {cal:"~2,250", p:"~210", c:"~240", f:"~40–50"},
+  rest: {cal:"~1,900", p:"~200", c:"~170", f:"~40"},
 };
 
-const suppPlans={
-  rest:[
-    {time:"Morning — before Meal 1",items:[
-      {name:"NAC",dose:"1200mg",note:"Empty stomach"},
-      {name:"Omega-3",dose:"2g",note:"With water"},
-      {name:"Creatine",dose:"5g",note:"Rest day: morning"},
+const lunch = {id:2, title:"Meal 2", time:"~1pm · lunch", options:[
+  {label:"A", items:[I('chick150'), I('garlic'), I('salad')], note:"Garlic rice already has oil — no avocado or extra fat needed."},
+  {label:"B", items:[I('mchef')], note:"Pick a meal with ≥40g protein. Under 40g? Add half a scoop of WPI."},
+]};
+
+const plans = {
+  gym: { meals: [
+    {id:1, title:"Meal 1", time:"~9–10am · coffee & water before", options:[
+      {label:"A", items:[I('wpi2','2 scoops WPI mixed with water (as the "milk")'), I('fibre24'), I('cnut36'), I('banana')], note:"Your high-protein cereal bowl."},
+      {label:"B", items:[I('yog200'), I('wpi1'), I('mix40'), I('banana')]},
+      {label:"C", items:[I('muffin2'), I('wpi1','1 scoop WPI shake')], note:"Muscle Muffins — microwave with water, ready in a minute."},
     ]},
-    {time:"Lunch — with Meal 3",items:[
-      {name:"Vitamin D3",dose:"5000 IU",note:"With fat-containing meal"},
-      {name:"Multivitamin",dose:"1 tablet",note:"With food"},
-      {name:"Omega-3",dose:"2g",note:"With food"},
+    lunch,
+    {id:3, title:"Meal 3", tag:"Pre-workout", time:"~4–5pm if training after work · or before a morning session", options:[
+      {label:"A", items:[I('cor40'), I('wpi1'), I('pb15'), I('kiwis')]},
+      {label:"B", items:[I('yog170'), I('wpi1'), I('blue150'), I('cnut20')], note:"Yoghurt bowl."},
+      {label:"C", items:[I('muffin2')], note:"Easiest pre-workout — macros almost identical to option A."},
     ]},
-    {time:"Dinner — with Meal 5",items:[
-      {name:"Omega-3",dose:"2g",note:"With food"},
+    {id:4, title:"Meal 4", time:"Dinner", options:[
+      {label:"A", items:[I('chick180'), I('pot200'), I('veg'), I('oil10')]},
+      {label:"B", items:[I('salmon150'), I('rice150'), I('veg')]},
+      {label:"C", items:[I('eggs3'), I('whites300'), I('omveg'), I('toast2')], note:"Omelette — light and easy on late nights. Cook with spray oil, no extra fat needed."},
     ]},
-    {time:"Before bed",items:[
-      {name:"Red Yeast Rice",dose:"600mg",note:"No food needed"},
-    ]}
-  ],
-  training:[
-    {time:"Morning — before Meal 1",items:[
-      {name:"NAC",dose:"1200mg",note:"Empty stomach"},
-      {name:"Omega-3",dose:"2g",note:"With water"},
+  ]},
+  rest: { meals: [
+    {id:1, title:"Meal 1", time:"~9–10am · portable for city days", options:[
+      {label:"A", items:[I('yog200'), I('wpi1','1 scoop WPI mixed in'), I('kiwis')], note:"Prep the tub the night before."},
+      {label:"B", items:[I('wpi2','2 scoops WPI (shaker, water)'), I('mix40', '40g cereal mix — pack dry'), I('kiwis')], note:"Cereal bowl at the office: dry cereal in a container + shake."},
+      {label:"C", items:[I('muffin1'), I('wpi1','1 scoop WPI shake')], note:"Needs an office microwave."},
     ]},
-    {time:"Lunch — with Meal 3",items:[
-      {name:"Vitamin D3",dose:"5000 IU",note:"With fat-containing meal"},
-      {name:"Multivitamin",dose:"1 tablet",note:"With food"},
-      {name:"Omega-3",dose:"2g",note:"With food"},
+    lunch,
+    {id:3, title:"Meal 3", time:"~4pm · office snack", options:[
+      {label:"A", items:[I('wpi1','1 scoop WPI shake'), I('banana'), I('pb15')]},
+      {label:"B", items:[I('wpi1','1 scoop WPI shake'), I('ricecake2'), I('pb15')]},
+      {label:"C", items:[I('wpi1','1 scoop WPI shake'), I('popcorn40')], note:"Buy the multipack — the bag is the portion."},
+      {label:"D", items:[I('muffin1'), I('wpi1','1 scoop WPI shake')]},
     ]},
-    {time:"Intra-workout",items:[
-      {name:"Creatine",dose:"5g",note:"Training day"},
+    {id:4, title:"Meal 4", time:"Dinner", options:[
+      {label:"A", items:[I('chick200'), I('pot150'), I('veg'), I('oil10')]},
+      {label:"B", items:[I('salmon150'), I('rice150'), I('veg')]},
+      {label:"C", items:[I('eggs2'), I('whites300'), I('omveg'), I('toast2')], note:"Omelette — 2 whole eggs on rest days so you get the full bread portion. Load it with free veg."},
     ]},
-    {time:"Dinner — with Meal 5",items:[
-      {name:"Omega-3",dose:"2g",note:"With food"},
-    ]},
-    {time:"Before bed",items:[
-      {name:"Red Yeast Rice",dose:"600mg",note:"No food needed"},
-    ]}
-  ]
+  ]},
 };
 
-const groceries=[
-  {category:"Protein",items:[
-    {name:"Chicken breast",qty:"~2.5 kg",note:"Meal 3 & 5 across the week"},
-    {name:"Fish (salmon / tuna / white)",qty:"~500g",note:"2–3 servings swap"},
-    {name:"Lean red meat or turkey mince",qty:"~400g",note:"2× week"},
-    {name:"Whole eggs",qty:"24 eggs",note:"3–4 per day across meals"},
-    {name:"Egg whites (carton)",qty:"1 large carton",note:"2 whites per meal"},
-    {name:"Whey protein",qty:"~1 kg tub",note:"Up to 80g/day training days"},
-    {name:"Greek yoghurt",qty:"~1.5 kg",note:"150g × 7 days"},
+/* ---------- GUIDE ---------- */
+const guide = [
+  {title:"Daily targets", rows:[
+    {name:"Gym days", note:"Mon · Wed · Fri · Sat", dose:"2,250 kcal · 210P", c:"green"},
+    {name:"Rest days", note:"Tue · Thu · Sun", dose:"1,900 kcal · 200P", c:"green"},
+    {name:"Macro split", note:"Gym ≈ 38% protein · 45% carbs · 16% fat. Rest ≈ 44% protein · 38% carbs · 19% fat. Live split shows on the Meals tab.", dot:"purple"},
   ]},
-  {category:"Carbs & Grains",items:[
-    {name:"White or basmati rice",qty:"~2 kg",note:"Main carb Meal 3 & 5"},
-    {name:"Rolled oats",qty:"~800g",note:"Meal 1 base, multiple days"},
-    {name:"Wholegrain bread",qty:"2 loaves",note:"~4 slices/day some days"},
-    {name:"Rice flour",qty:"~500g",note:"Meal 1 & pre-workout option"},
-    {name:"Vietnamese rolls",qty:"4–6 rolls",note:"Optional bread swap"},
-    {name:"Sweet potato",qty:"~1.5 kg",note:"Carb swap Meal 3/5"},
-    {name:"White potato",qty:"~1.5 kg",note:"Carb swap Meal 3/5"},
-    {name:"Pasta",qty:"~500g",note:"Rest day Meal 3 swap"},
-    {name:"Granola or cereal",qty:"~400g",note:"20g per training day"},
-    {name:"Rice crackers",qty:"1 packet",note:"Meal 2 swap training days"},
+  {title:"Rules", rows:[
+    {name:"Protein first", note:"Eat the protein part of each meal first. Never skip a shake, even when not hungry.", dot:"accent"},
+    {name:"Water 3L+", note:"Every day. Spread it out — more on gym days.", dot:"blue"},
+    {name:"4 meals", note:"Moderate size, lower fat per meal. Stop at comfortably full.", dot:"accent"},
+    {name:"Weigh-in weekly", note:"Monday morning, after the toilet, before food. Same conditions every week.", dot:"purple"},
+    {name:"Cardio is a bonus", note:"Walks or cardio any day you feel like it. Not counted in the numbers — skipping never puts you behind.", dot:"orange"},
+    {name:"Night cravings", note:"Move Meal 3's shake to after dinner — mix the chocolate WPI thick like a pudding.", dot:"orange"},
   ]},
-  {category:"Fruits",items:[
-    {name:"Bananas",qty:"10–14",note:"Most versatile — grab & go"},
-    {name:"Strawberries",qty:"~900g",note:"300g per portion"},
-    {name:"Blueberries",qty:"~450g",note:"150g per portion"},
-    {name:"Pineapple",qty:"1 large or 400g tinned",note:"200g per portion"},
-    {name:"Kiwis",qty:"6–8",note:"2 per portion"},
-    {name:"Melon",qty:"1 medium",note:"300g per portion"},
+  {title:"Training time", rows:[
+    {name:"Morning session", note:"Have the shake from Meal 3 before the gym, then Meal 1 as normal. Rest of Meal 3 mid-afternoon.", dot:"accent"},
+    {name:"Evening session", note:"Meal 3 at ~4–5pm is pre-workout. Dinner is post-workout.", dot:"accent"},
   ]},
-  {category:"Fats & Spreads",items:[
-    {name:"Avocados",qty:"6–8",note:"100g per serving"},
-    {name:"Extra virgin olive oil",qty:"1 bottle",note:"10g portions"},
-    {name:"Cashew or almond butter",qty:"~200g jar",note:"15g portions rest day meals"},
-    {name:"Honey",qty:"1 small jar",note:"10g pre-workout option B"},
-    {name:"Cream cheese",qty:"~150g",note:"Option B Meal 5"},
+  {title:"Fruit swaps · ≈ 1 banana", rows:[
+    {name:"Banana", note:"1 medium", dose:"~100 kcal", c:"blue"},
+    {name:"Kiwis", note:"2 whole", dose:"~90 kcal", c:"blue"},
+    {name:"Strawberries", note:"300g", dose:"~95 kcal", c:"blue"},
+    {name:"Blueberries", note:"150g", dose:"~85 kcal", c:"blue"},
   ]},
-  {category:"Dairy & Cheese",items:[
-    {name:"Mozzarella or cheese slices",qty:"~200g",note:"1–2 slices per meal"},
+  {title:"Fat swaps · ≈ 10g olive oil", rows:[
+    {name:"Olive oil", note:"10g — drizzle on veg, rice or salad", dose:"~90 kcal", c:"orange"},
+    {name:"Peanut butter", note:"15g", dose:"~95 kcal", c:"orange"},
+    {name:"Almonds or cashews", note:"15g", dose:"~90 kcal", c:"orange"},
+    {name:"Reduced-fat cheese slices", note:"2 slices (~40g) — e.g. 'light' or 'so light' sliced cheese", dose:"~100 kcal", c:"orange"},
+    {name:"Lindt 70–75% dark chocolate", note:"2 squares (~20g) — nice after dinner instead of the olive oil", dose:"~115 kcal", c:"orange"},
   ]},
-  {category:"Salad & Vegetables",items:[
-    {name:"Mixed salad leaves",qty:"2 large bags",note:"Daily with Meal 3 & 5"},
-    {name:"Cucumber",qty:"1–2",note:"Salad base"},
-    {name:"Tomatoes",qty:"~500g",note:"Salad base"},
-    {name:"Extra salad veg",qty:"As needed",note:"Capsicum, carrots, etc."},
+  {title:"Carb swaps", rows:[
+    {name:"Lunch rice", note:"Always the full 250g garlic rice pouch — no waste", dose:"1 pouch", c:"blue"},
+    {name:"Jasmine rice pouch (250g)", note:"Swap freely for the garlic rice — ~370 kcal vs ~406 kcal, same volume. Days you use it land slightly under target.", dose:"1 pouch", c:"blue"},
+    {name:"200g potato", note:"= ½ plain rice pouch (125g), use 5g olive oil instead of 10g", dose:"dinner", c:"blue"},
+    {name:"150g potato", note:"= ~90g cooked plain rice", dose:"dinner", c:"blue"},
+    {name:"40g cream of rice", note:"= 40g rice flour", dose:"swap", c:"blue"},
+    {name:"Frozen chips (air fryer)", note:"Replace dinner potato + olive oil: ~160g frozen chips (gym) · ~130g (rest). Weigh frozen. Plain straight-cut or sweet potato fries — skip battered / 'pub style' coated ones. Check the label: aim ~150 kcal per 100g.", dose:"no oil", c:"blue"},
+    {name:"Microwave baby potatoes", note:"Plain bagged ones, ready in ~5 min. Same weight as boiled potato.", dose:"1 : 1", c:"blue"},
   ]},
-  {category:"Supplements — check stock",items:[
-    {name:"Vitamin D3 5000 IU",qty:"1/day",note:"Every day with lunch"},
-    {name:"Multivitamin",qty:"1/day",note:"Every day with lunch"},
-    {name:"Omega-3 (EPA+DHA)",qty:"6g/day",note:"2g × 3 meals"},
-    {name:"NAC 1200mg",qty:"1/day",note:"Every morning, empty stomach"},
-    {name:"Red Yeast Rice 600mg",qty:"1/day",note:"Every night before bed"},
-    {name:"Creatine monohydrate",qty:"5g/day",note:"Every day"},
-  ]}
+  {title:"Bread swaps · omelette dinner", rows:[
+    {name:"Gym days", note:"2 slices wholegrain or white bread · or 1 large slice sourdough (~65g) · or 1 Lebanese wholemeal round · or 200g potato", dose:"~165 kcal", c:"blue"},
+    {name:"Rest days", note:"Same full portion as gym days — the omelette uses 2 whole eggs instead of 3 to make room", dose:"~165 kcal", c:"blue"},
+    {name:"No-bread options", note:"~110g frozen chips or sweet potato fries (weighed frozen, air fryer) · 230g microwave baby potatoes · 1 Lebanese round toasted as a wrap", dose:"~165 kcal", c:"blue"},
+    {name:"Free volume", note:"Load the omelette with mushrooms, spinach, capsicum, onion, zucchini, tomato, salsa, herbs, hot sauce — no need to count", dot:"accent"},
+    {name:"Make it a sandwich", note:"Fold the omelette into the bread or wrap — same numbers.", dot:"accent"},
+  ]},
+  {title:"Protein swaps", rows:[
+    {name:"Chicken breast ↔ lean beef", note:"Same cooked weight. Beef adds a little fat — fine.", dose:"1 : 1", c:"green"},
+    {name:"Omelette dinner", note:"3 whole eggs + 300g egg whites ≈ same protein as 180g chicken.", dose:"option C", c:"green"},
+    {name:"Salmon", note:"Optional. Lower protein — on salmon nights have the chocolate WPI pudding.", dose:"150g", c:"green"},
+    {name:"Muscle Chef", note:"Any meal ≥40g protein and ≤600 kcal replaces lunch.", dose:"backup", c:"green"},
+    {name:"Eating out (max 1/week)", note:"Grilled protein + rice or salad. Skip the sides and desserts.", dose:"1×", c:"green"},
+  ]},
 ];
 
-// STATE
-let mealDay="rest";
-let suppDay="rest";
-const mealSel={rest:{1:"A",2:"A",3:"A",4:"A",5:"A"},training:{1:"A",2:"A",3:"A",4:"A",5:"A"}};
-const groceryChecked={};
+/* ---------- SUPPLEMENTS ---------- */
+const suppPlans = {
+  rest: [
+    {time:"On waking", items:[
+      {name:"NAC", dose:"1200mg", note:"Empty stomach, with water"},
+      {name:"Creatine", dose:"5g", note:"Rest day: morning"},
+    ]},
+    {time:"Meal 1", items:[
+      {name:"Omega-3", dose:"2g", note:"With food"},
+      {name:"Kidney Cleanse (NOW)", dose:"2 caps", note:"Big glass of water. Max 4 weeks — stop by ~22 Nov"},
+    ]},
+    {time:"Lunch — with Meal 2", items:[
+      {name:"Vitamin D3 + K2", dose:"5000 IU", note:"With food"},
+      {name:"Multivitamin", dose:"1 tablet", note:"With food"},
+      {name:"Omega-3", dose:"2g", note:"With food"},
+    ]},
+    {time:"Dinner — with Meal 4", items:[
+      {name:"Omega-3", dose:"2g", note:"With food"},
+      {name:"TUDCA", dose:"500mg", note:"With food"},
+    ]},
+    {time:"Before bed", items:[
+      {name:"Red Yeast Rice", dose:"600mg", note:"No food needed"},
+      {name:"5-HTP", dose:"100→200mg", note:"30–60 min before bed. Start at 100mg for a week"},
+    ]},
+  ],
+  gym: [
+    {time:"On waking", items:[
+      {name:"NAC", dose:"1200mg", note:"Empty stomach, with water"},
+    ]},
+    {time:"Meal 1", items:[
+      {name:"Omega-3", dose:"2g", note:"With food"},
+      {name:"Kidney Cleanse (NOW)", dose:"2 caps", note:"Big glass of water. Max 4 weeks — stop by ~22 Nov"},
+    ]},
+    {time:"Lunch — with Meal 2", items:[
+      {name:"Vitamin D3 + K2", dose:"5000 IU", note:"With food"},
+      {name:"Multivitamin", dose:"1 tablet", note:"With food"},
+      {name:"Omega-3", dose:"2g", note:"With food"},
+    ]},
+    {time:"Intra-workout", items:[
+      {name:"Creatine", dose:"5g", note:"Gym day"},
+    ]},
+    {time:"Dinner — with Meal 4", items:[
+      {name:"Omega-3", dose:"2g", note:"With food"},
+      {name:"TUDCA", dose:"500mg", note:"With food"},
+    ]},
+    {time:"Before bed", items:[
+      {name:"Red Yeast Rice", dose:"600mg", note:"No food needed"},
+      {name:"5-HTP", dose:"100→200mg", note:"30–60 min before bed. Start at 100mg for a week"},
+    ]},
+  ],
+};
 
-function sum(items){return items.reduce((a,i)=>({cal:a.cal+i.cal,p:a.p+i.p,c:a.c+i.c,f:a.f+i.f}),{cal:0,p:0,c:0,f:0});}
+/* ---------- GROCERY (weekly, based on A options) ---------- */
+const groceries = [
+  {category:"Protein", items:[
+    {name:"Chicken breast", qty:"~2.5 kg raw", note:"Lunch every day + most dinners"},
+    {name:"Lean beef (steak or 5-star mince)", qty:"~800g raw", note:"2–3 dinners"},
+    {name:"Amino Z WPI", qty:"~550g", note:"~18 scoops/week"},
+    {name:"Greek yoghurt", qty:"~1 kg", note:"Rest-day Meal 1 + yoghurt bowls"},
+    {name:"Salmon (optional)", qty:"~300g", note:"1–2 dinners if you want it"},
+    {name:"Muscle Chef meals", qty:"1–2", note:"Backup lunches"},
+    {name:"Eggs", qty:"1 dozen", note:"Omelette dinners (3 per omelette)"},
+    {name:"Liquid egg whites", qty:"1 kg carton", note:"300g per omelette"},
+    {name:"Amino Z Muscle Muffins", qty:"Optional", note:"Option C for Meal 1 / Meal 3"},
+  ]},
+  {category:"Carbs & Cereal", items:[
+    {name:"Garlic rice pouches 250g", qty:"6–7", note:"One per lunch"},
+    {name:"Jasmine microwave rice pouch", qty:"2–3", note:"Cheaper lunch swap + ½ pouch at dinner"},
+    {name:"Potatoes / microwave baby potatoes", qty:"~1.3 kg", note:"Dinners"},
+    {name:"Frozen sweet potato fries or straight-cut chips", qty:"~1 kg bag", note:"Weigh frozen: 160g gym dinner · 130g rest dinner · 110g with omelette"},
+    {name:"All-Bran Flakes (wheat or honey almond)", qty:"1 box", note:"40% of the cereal mix"},
+    {name:"Crunchy Nut", qty:"1 box", note:"60% of the cereal mix"},
+    {name:"Cream of rice", qty:"1 box", note:"Gym-day pre-workout"},
+    {name:"Rice cakes", qty:"1 pack", note:"Office snack"},
+    {name:"Bread (white, wholegrain, sourdough or Lebanese)", qty:"1 pack", note:"Omelette dinners"},
+    {name:"Popcorn multipack (small bags)", qty:"1 pack", note:"Lightly salted or sweet & salty"},
+  ]},
+  {category:"Fruit", items:[
+    {name:"Bananas", qty:"7–8", note:"Meal 1 gym days + rest-day snack"},
+    {name:"Kiwis", qty:"12–14", note:"2 per portion"},
+    {name:"Blueberries", qty:"~300g", note:"Yoghurt bowls / swaps"},
+    {name:"Strawberries", qty:"Optional", note:"300g per portion"},
+  ]},
+  {category:"Fats", items:[
+    {name:"Extra virgin olive oil", qty:"1 bottle", note:"10g at dinner"},
+    {name:"Peanut butter", qty:"1 jar", note:"15g portions"},
+  ]},
+  {category:"Veg & Salad", items:[
+    {name:"Frozen veg mix", qty:"2 bags", note:"Zero-prep dinners"},
+    {name:"Spinach, mushrooms, tomato", qty:"As needed", note:"Omelette filling"},
+    {name:"Olive oil spray", qty:"1 can", note:"Cooking eggs"},
+    {name:"Salad leaves", qty:"2 bags", note:"Lunch"},
+    {name:"Cucumber & tomatoes", qty:"As needed", note:"Salad base"},
+  ]},
+  {category:"Supplements — check stock", items:[
+    {name:"NAC 1200mg", qty:"1/day", note:"On waking"},
+    {name:"Omega-3", qty:"6g/day", note:"2g × 3 meals"},
+    {name:"Vitamin D3 + K2", qty:"1/day", note:"With lunch"},
+    {name:"Multivitamin", qty:"1/day", note:"With lunch"},
+    {name:"Creatine", qty:"5g/day", note:"Every day"},
+    {name:"Red Yeast Rice 600mg", qty:"1/day", note:"Before bed"},
+    {name:"TUDCA 500mg", qty:"1/day", note:"With dinner"},
+    {name:"5-HTP", qty:"100–200mg/day", note:"Before bed"},
+    {name:"Kidney Cleanse (NOW)", qty:"2 caps/day", note:"4-week course only"},
+  ]},
+];
 
-// PAGE NAV
+/* ---------- STATE (remembered on this phone) ---------- */
+function load(key, fallback){ try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch(e){ return fallback; } }
+function save(key, val){ try { localStorage.setItem(key, JSON.stringify(val)); } catch(e){} }
+
+const todayIsGym = [1,3,5,6].includes(new Date().getDay());
+let mealDay = todayIsGym ? "gym" : "rest";
+let suppDay = mealDay;
+const mealSel = load('np2_sel', {gym:{}, rest:{}});
+const groceryChecked = load('np2_groc', {});
+
+const r = n => Math.round(n);
+function sum(items){ return items.reduce((a,i)=>({cal:a.cal+i.cal,p:a.p+i.p,c:a.c+i.c,f:a.f+i.f}),{cal:0,p:0,c:0,f:0}); }
+function getOpt(m){ return m.options.find(o=>o.label===mealSel[mealDay][m.id]) || m.options[0]; }
+
+/* ---------- NAV ---------- */
 function showPage(id, btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+function setToggle(id, day){
+  document.querySelectorAll('#'+id+' .day-btn').forEach(b=>b.classList.toggle('active', b.dataset.day===day));
 }
 
-// MEALS
-function switchDay(day){
-  mealDay=day;
-  document.querySelectorAll('.day-toggle .day-btn')[day==='rest'?0:1].classList.add('active');
-  document.querySelectorAll('.day-toggle .day-btn')[day==='rest'?1:0].classList.remove('active');
-  renderMeals();
-}
-
-function selectOpt(mealId,label){
-  mealSel[mealDay][mealId]=label;
-  renderMeals();
-}
+/* ---------- MEALS ---------- */
+function switchDay(day){ mealDay = day; setToggle('meal-toggle', day); renderMeals(); }
+function selectOpt(mealId, label){ mealSel[mealDay][mealId] = label; save('np2_sel', mealSel); renderMeals(); }
 
 function renderMeals(){
-  const plan=plans[mealDay];
-  let T={cal:0,p:0,c:0,f:0};
-  plan.meals.forEach(m=>{
-    const opt=m.options.find(o=>o.label===mealSel[mealDay][m.id])||m.options[0];
-    const s=sum(opt.items);
-    T.cal+=s.cal;T.p+=s.p;T.c+=s.c;T.f+=s.f;
-  });
-  document.getElementById('t-cal').innerHTML=T.cal+'<span class="total-unit">kcal</span>';
-  document.getElementById('t-pro').innerHTML=T.p+'<span class="total-unit">g</span>';
-  document.getElementById('t-carb').innerHTML=T.c+'<span class="total-unit">g</span>';
-  document.getElementById('t-fat').innerHTML=T.f+'<span class="total-unit">g</span>';
+  const plan = plans[mealDay];
+  const T = sum(plan.meals.map(m=>sum(getOpt(m).items)));
+  const tg = TARGETS[mealDay];
+  document.getElementById('t-cal').innerHTML  = r(T.cal).toLocaleString()+'<span class="total-unit">kcal</span>';
+  document.getElementById('t-pro').innerHTML  = r(T.p)+'<span class="total-unit">g</span>';
+  document.getElementById('t-carb').innerHTML = r(T.c)+'<span class="total-unit">g</span>';
+  document.getElementById('t-fat').innerHTML  = r(T.f)+'<span class="total-unit">g</span>';
+  const mk = T.p*4 + T.c*4 + T.f*9;
+  const pc = x => Math.round(x/mk*100)+'%';
+  document.getElementById('tt-cal').textContent  = 'target '+tg.cal;
+  document.getElementById('tt-pro').textContent  = pc(T.p*4)+' · target '+tg.p+'g';
+  document.getElementById('tt-carb').textContent = pc(T.c*4)+' · target '+tg.c+'g';
+  document.getElementById('tt-fat').textContent  = pc(T.f*9)+' · target '+tg.f+'g';
 
-  const container=document.getElementById('meals-list');
-  container.innerHTML='';
+  const container = document.getElementById('meals-list');
+  container.innerHTML = '';
   plan.meals.forEach(m=>{
-    const sel=mealSel[mealDay][m.id];
-    const activeOpt=m.options.find(o=>o.label===sel)||m.options[0];
-    const s=sum(activeOpt.items);
-    const card=document.createElement('div');
-    card.className='meal-card';
-    let toggle='';
-    if(m.options.length>1){
-      toggle='<div class="opt-toggle">';
-      m.options.forEach(o=>{
-        const cls=(mealSel[mealDay][m.id]===o.label)?'opt-btn active':'opt-btn';
-        toggle+=`<button class="${cls}" onclick="selectOpt(${m.id},'${o.label}')">${o.label}</button>`;
-      });
-      toggle+='</div>';
+    const opt = getOpt(m);
+    const s = sum(opt.items);
+    let toggle = '';
+    if (m.options.length > 1){
+      toggle = '<div class="opt-toggle">' + m.options.map(o=>
+        `<button class="opt-btn${o.label===opt.label?' active':''}" onclick="selectOpt(${m.id},'${o.label}')">${o.label}</button>`
+      ).join('') + '</div>';
     }
-    let items='<ul class="item-list">';
-    activeOpt.items.forEach(i=>{items+=`<li><span>${i.name}</span><span class="kcal">${i.cal} kcal</span></li>`;});
-    items+='</ul>';
-    const tag=m.tag?`<span class="meal-tag">${m.tag}</span>`:'';
-    card.innerHTML=`
+    const items = '<ul class="item-list">' + opt.items.map(i=>`<li><span>${i.name}</span><span class="kcal">${r(i.cal)} kcal</span></li>`).join('') + '</ul>';
+    const note = opt.note ? `<div class="opt-note">${opt.note}</div>` : '';
+    const tag = m.tag ? `<span class="meal-tag">${m.tag}</span>` : '';
+    const card = document.createElement('div');
+    card.className = 'meal-card';
+    card.innerHTML = `
       <div class="meal-top">
-        <div class="meal-name">${m.title}${tag}</div>
+        <div>
+          <div class="meal-name">${m.title}${tag}</div>
+          <div class="meal-time">${m.time||''}</div>
+        </div>
         <div class="meal-macros">
-          <span class="mpill mpill-cal">${s.cal}kcal</span>
-          <span class="mpill mpill-p">${s.p}P</span>
-          <span class="mpill mpill-c">${s.c}C</span>
-          <span class="mpill mpill-f">${s.f}F</span>
+          <span class="mpill mpill-cal">${r(s.cal)}kcal</span>
+          <span class="mpill mpill-p">${r(s.p)}P</span>
+          <span class="mpill mpill-c">${r(s.c)}C</span>
+          <span class="mpill mpill-f">${r(s.f)}F</span>
         </div>
       </div>
-      ${toggle}${items}`;
+      ${toggle}${items}${note}`;
     container.appendChild(card);
   });
 }
 
-// SUPPS
-function switchSuppDay(day){
-  suppDay=day;
-  document.querySelectorAll('#page-supps .day-toggle .day-btn')[day==='rest'?0:1].classList.add('active');
-  document.querySelectorAll('#page-supps .day-toggle .day-btn')[day==='rest'?1:0].classList.remove('active');
-  renderSupps();
+/* ---------- GUIDE ---------- */
+function renderGuide(){
+  const container = document.getElementById('guide-list');
+  container.innerHTML = guide.map(block=>`
+    <div class="supp-block">
+      <div class="supp-time-label">${block.title}</div>
+      <div class="supp-card">
+        ${block.rows.map(row=>`
+          <div class="supp-row">
+            ${row.dot ? `<div class="supp-dot ${row.dot==='accent'?'':row.dot}"></div>` : ''}
+            <div class="supp-main">
+              <div class="supp-name">${row.name}</div>
+              <div class="supp-note">${row.note}</div>
+            </div>
+            ${row.dose ? `<span class="supp-dose ${row.c||''}">${row.dose}</span>` : ''}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
 }
 
+/* ---------- SUPPS ---------- */
+function switchSuppDay(day){ suppDay = day; setToggle('supp-toggle', day); renderSupps(); }
 function renderSupps(){
-  const blocks=suppPlans[suppDay];
-  const container=document.getElementById('supps-list');
-  container.innerHTML='';
-  blocks.forEach(block=>{
-    const wrap=document.createElement('div');
-    wrap.className='supp-block';
-    let html=`<div class="supp-time-label">${block.time}</div><div class="supp-card">`;
-    block.items.forEach(s=>{
-      html+=`<div class="supp-row">
-        <div class="supp-dot"></div>
-        <div>
-          <div class="supp-name">${s.name}</div>
-          <div class="supp-note">${s.note}</div>
-        </div>
-        <span class="supp-dose">${s.dose}</span>
-      </div>`;
-    });
-    html+='</div>';
-    wrap.innerHTML=html;
-    container.appendChild(wrap);
-  });
+  const container = document.getElementById('supps-list');
+  container.innerHTML = suppPlans[suppDay].map(block=>`
+    <div class="supp-block">
+      <div class="supp-time-label">${block.time}</div>
+      <div class="supp-card">
+        ${block.items.map(s=>`
+          <div class="supp-row">
+            <div class="supp-dot"></div>
+            <div class="supp-main">
+              <div class="supp-name">${s.name}</div>
+              <div class="supp-note">${s.note}</div>
+            </div>
+            <span class="supp-dose">${s.dose}</span>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
 }
 
-// GROCERY
+/* ---------- GROCERY ---------- */
 function renderGrocery(){
-  const container=document.getElementById('grocery-list');
-  container.innerHTML='';
+  const container = document.getElementById('grocery-list');
+  container.innerHTML = '';
   groceries.forEach((cat,ci)=>{
-    const sec=document.createElement('div');
-    sec.className='grocery-cat';
-    let html=`<div class="cat-label">${cat.category}</div><div class="grocery-card">`;
+    const sec = document.createElement('div');
+    sec.className = 'grocery-cat';
+    let html = `<div class="cat-label">${cat.category}</div><div class="grocery-card">`;
     cat.items.forEach((item,ii)=>{
-      const id=`g-${ci}-${ii}`;
-      if(!(id in groceryChecked)) groceryChecked[id]=false;
-      const cls=groceryChecked[id]?'grocery-row checked':'grocery-row';
-      html+=`<div class="${cls}" id="${id}" onclick="toggleGrocery('${id}')">
+      const id = `g-${ci}-${ii}`;
+      if (!(id in groceryChecked)) groceryChecked[id] = false;
+      html += `<div class="grocery-row${groceryChecked[id]?' checked':''}" id="${id}" onclick="toggleGrocery('${id}')">
         <div class="g-check"><svg viewBox="0 0 11 11"><polyline points="1.5,5.5 4,8 9.5,2"/></svg></div>
-        <div class="g-info">
-          <div class="g-name">${item.name}</div>
-          <div class="g-note">${item.note}</div>
-        </div>
+        <div class="g-info"><div class="g-name">${item.name}</div><div class="g-note">${item.note}</div></div>
         <span class="g-qty">${item.qty}</span>
       </div>`;
     });
-    html+='</div>';
-    sec.innerHTML=html;
+    sec.innerHTML = html + '</div>';
     container.appendChild(sec);
   });
   updateProgress();
 }
-
 function toggleGrocery(id){
-  groceryChecked[id]=!groceryChecked[id];
-  const row=document.getElementById(id);
-  row.classList.toggle('checked',groceryChecked[id]);
+  groceryChecked[id] = !groceryChecked[id];
+  document.getElementById(id).classList.toggle('checked', groceryChecked[id]);
+  save('np2_groc', groceryChecked);
   updateProgress();
 }
-
 function resetGrocery(){
   Object.keys(groceryChecked).forEach(k=>groceryChecked[k]=false);
   document.querySelectorAll('.grocery-row').forEach(r=>r.classList.remove('checked'));
+  save('np2_groc', groceryChecked);
   updateProgress();
 }
-
 function updateProgress(){
-  const total=Object.keys(groceryChecked).length;
-  const done=Object.values(groceryChecked).filter(Boolean).length;
-  const pct=total?Math.round(done/total*100):0;
-  document.getElementById('prog-count').textContent=`${done} of ${total} items`;
-  document.getElementById('prog-pct').textContent=pct+'%';
-  document.getElementById('prog-fill').style.width=pct+'%';
+  const ids = Array.from(document.querySelectorAll('.grocery-row')).map(r=>r.id);
+  const done = ids.filter(id=>groceryChecked[id]).length;
+  const pct = ids.length ? Math.round(done/ids.length*100) : 0;
+  document.getElementById('prog-count').textContent = `${done} of ${ids.length} items`;
+  document.getElementById('prog-pct').textContent = pct+'%';
+  document.getElementById('prog-fill').style.width = pct+'%';
 }
 
-// INIT
+/* ---------- INIT ---------- */
+setToggle('meal-toggle', mealDay);
+setToggle('supp-toggle', suppDay);
 renderMeals();
+renderGuide();
 renderSupps();
 renderGrocery();
-
-// Fix day toggle buttons scoped to each page
-document.querySelectorAll('#page-meals .day-toggle .day-btn')[0].classList.add('active');
-document.querySelectorAll('#page-supps .day-toggle .day-btn')[0].classList.add('active');
 </script>
 </body>
 </html>
