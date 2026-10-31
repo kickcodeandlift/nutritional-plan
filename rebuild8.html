@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>REBUILD 8</title>
 <meta name="robots" content="noindex,nofollow">
-<meta name="ver" content="20261031-224738">
+<meta name="ver" content="20261031-230504">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -299,10 +299,13 @@ function push(manual){
     var body={message:"log "+new Date().toISOString(),content:b64(payload())};if(cur&&cur.sha)body.sha=cur.sha;
     return api(FILE,{method:"PUT",body:JSON.stringify(body)})
   }).then(function(r){
-    if(!r.ok)throw r;stamp();ghMsg("Saved to GitHub "+new Date().toLocaleTimeString())
-  }).catch(function(r){ghMsg(r&&r.status?ghErr(r):"No connection. It will save at the next change.")})
+    if(!r.ok)throw r;pend(false);stamp();ghMsg("Saved to GitHub "+new Date().toLocaleTimeString())
+  }).catch(function(r){ghMsg(r&&r.status?ghErr(r):"No connection. It will save automatically when you are back online.")})
 }
-function sched(){if(!GH||typeof gt==="undefined")return;clearTimeout(gt);gt=setTimeout(function(){push(false)},4000)}
+function pend(v){try{if(v)localStorage.setItem("rb8pend","1");else localStorage.removeItem("rb8pend")}catch(e){}}
+function sched(){if(!GH||typeof gt==="undefined")return;pend(true);clearTimeout(gt);gt=setTimeout(function(){push(false)},4000)}
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden"&&GH){var p=false;try{p=!!localStorage.getItem("rb8pend")}catch(e){}if(p){clearTimeout(gt);push(false)}}});
+window.addEventListener("online",function(){var p=false;try{p=!!localStorage.getItem("rb8pend")}catch(e){}if(GH&&p)push(false)});
 function ghLoad(){
   if(!GH){ghMsg("Connect first.");return}
   ghMsg("Loading...");
@@ -329,6 +332,7 @@ function doUpdate(){var u=location.href.split("#")[0].split("?")[0];(window.cach
 document.getElementById("upd").addEventListener("click",doUpdate);
 document.getElementById("updbar").addEventListener("click",function(e){e.preventDefault();doUpdate()});
 try{fetch(location.href.split("#")[0].split("?")[0],{cache:"no-store"}).then(function(r){return r.text()}).then(function(h){var m=/name="ver" content="([^"]+)"/.exec(h);if(m&&VER&&m[1]!==VER)document.getElementById("updbar").style.display="block"}).catch(function(){})}catch(e){}
+if(GH){var pp=false;try{pp=!!localStorage.getItem("rb8pend")}catch(e){}if(pp)push(false)}
 nudge();try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
 render();
 })();
