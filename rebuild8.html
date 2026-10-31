@@ -2,6 +2,7 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>REBUILD 8</title>
 <meta name="robots" content="noindex,nofollow">
+<meta name="ver" content="20261031-222707">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -73,7 +74,8 @@ li.hi b{color:var(--hi)}
 </style>
 </head><body>
 <main>
-<header><h1>REBUILD <span>8</span></h1></header>
+<header style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px"><h1>REBUILD <span>8</span></h1><button id="upd" type="button" style="font:600 14px var(--disp);text-transform:uppercase;background:none;color:var(--fg);border:1px solid var(--line);padding:6px 12px;cursor:pointer">Update</button></header>
+<a id="updbar" href="#" style="display:none;background:var(--accent);color:var(--bg);padding:10px 12px;margin:8px 0;text-decoration:none;font-weight:600">New version available. Tap to update.</a>
 <a id="bkbar" href="#backup" style="display:none;background:var(--hi);color:#fff;padding:10px 12px;margin:8px 0;text-decoration:none;font-weight:600"></a>
 <section class="ger"><h2>GER scale <small>how hard each set is</small></h2>
 <table><tbody>
@@ -127,6 +129,11 @@ li.hi b{color:var(--hi)}
 <h3 id="backup">Backup</h3><p class="note">Your log lives only on this phone, in this app or browser. Removing the Home Screen icon, clearing site data or switching browser deletes it. Tap Backup after each session and send it to Notes, Mail or WhatsApp. Restore puts it back.</p>
 <button id="exp" type="button" style="font:600 15px var(--disp);text-transform:uppercase;background:var(--accent);color:var(--bg);border:0;padding:8px 14px;cursor:pointer">Backup and share</button> <button id="imp" type="button" style="font:600 15px var(--disp);text-transform:uppercase;background:none;color:var(--fg);border:1px solid var(--line);padding:7px 14px;cursor:pointer">Restore</button> <span id="impm" class="note"></span>
 <textarea id="expt" aria-label="Backup text" placeholder="Backup: tap Backup, copy the text. Restore: paste a backup here, tap Restore." style="width:100%;box-sizing:border-box;height:120px;margin-top:8px;background:var(--bg);color:var(--fg);border:1px solid var(--line);font:13px var(--mono)"></textarea>
+<h3>GitHub sync</h3>
+<p class="note">Saves your log to a private GitHub repo automatically, so it survives deleting the app. Setup once: 1) create a private repo, 2) create a fine-grained token limited to that repo with Contents read and write, 3) enter both below. The token stays on this device only.</p>
+<div class="gn"><input id="ghr" type="text" placeholder="owner/repo e.g. kickcodeandlift/rebuild8-data" autocomplete="off" autocapitalize="off"><input id="ght" type="password" placeholder="token (github_pat_...)" autocomplete="off"></div>
+<button id="ghs" type="button" style="font:600 15px var(--disp);text-transform:uppercase;background:var(--accent);color:var(--bg);border:0;padding:8px 14px;cursor:pointer">Connect and save</button> <button id="ghl" type="button" style="font:600 15px var(--disp);text-transform:uppercase;background:none;color:var(--fg);border:1px solid var(--line);padding:7px 14px;cursor:pointer">Load from GitHub</button> <button id="ghx" type="button" style="font:600 15px var(--disp);text-transform:uppercase;background:none;color:var(--hi);border:1px solid var(--line);padding:7px 14px;cursor:pointer">Disconnect</button>
+<p class="note" id="ghm"></p>
 </section>
 </main>
 <script>
@@ -139,7 +146,7 @@ try{cg=localStorage.getItem("rb8cg")||"1"}catch(e){}
 Object.keys(S).forEach(function(k){var g=k.split("|")[3];if(/^[1-6]$/.test(g)&&!G[g])G[g]="Gym "+g});
 if(!G[cg])cg="1";
 (function(){var m={};Object.keys(S).forEach(function(k){m[k.split("|").length===3?k+"|1":k]=S[k]});S=m})();
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));localStorage.setItem("rb8g",JSON.stringify(G));localStorage.setItem("rb8n",JSON.stringify(N));localStorage.setItem("rb8cg",cg)}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));localStorage.setItem("rb8g",JSON.stringify(G));localStorage.setItem("rb8n",JSON.stringify(N));localStorage.setItem("rb8cg",cg)}catch(e){}sched()}
 function di(d){return +d.slice(1)}
 function sk(w,d){return w*10+di(d)}
 function num(v){var n=parseFloat(String(v).replace(",","."));return isFinite(n)?n:0}
@@ -273,6 +280,55 @@ document.getElementById("imp").addEventListener("click",function(){
   save();location.reload();
 });
 gbar();fills.forEach(function(f){f()});
+var VER=(document.querySelector('meta[name=ver]')||{}).content||"";
+var GH=null;try{GH=JSON.parse(localStorage.getItem("rb8gh")||"null")}catch(e){}
+var ghm=document.getElementById("ghm"),gt=null,FILE="rebuild8-log.json";
+function ghMsg(s){ghm.textContent=s}
+function payload(){return JSON.stringify({v:2,S:S,G:G,N:N,saved:new Date().toISOString()})}
+function b64(s){return btoa(unescape(encodeURIComponent(s)))}
+function unb64(s){return decodeURIComponent(escape(atob(s.replace(/\s/g,""))))}
+function api(path,opt){opt=opt||{};opt.headers={"Authorization":"Bearer "+GH.t,"Accept":"application/vnd.github+json"};return fetch("https://api.github.com/repos/"+GH.r+"/contents/"+path,opt)}
+function ghErr(r){return r.status===401?"Token rejected. Check it and reconnect.":r.status===403?"No permission. The token needs Contents read and write on that repo.":r.status===404?"Repo not found. Check owner/repo and the token's repo access.":"GitHub error "+r.status}
+function push(manual){
+  if(!GH)return Promise.resolve();
+  if(!Object.keys(S).length&&!Object.keys(N).length){if(manual)ghMsg("Nothing logged yet, nothing to save.");return Promise.resolve()}
+  ghMsg("Saving to GitHub...");
+  return api(FILE).then(function(r){
+    if(r.status===404)return null;if(!r.ok)throw r;return r.json()
+  }).then(function(cur){
+    var body={message:"log "+new Date().toISOString(),content:b64(payload())};if(cur&&cur.sha)body.sha=cur.sha;
+    return api(FILE,{method:"PUT",body:JSON.stringify(body)})
+  }).then(function(r){
+    if(!r.ok)throw r;stamp();ghMsg("Saved to GitHub "+new Date().toLocaleTimeString())
+  }).catch(function(r){ghMsg(r&&r.status?ghErr(r):"No connection. It will save at the next change.")})
+}
+function sched(){if(!GH||typeof gt==="undefined")return;clearTimeout(gt);gt=setTimeout(function(){push(false)},4000)}
+function ghLoad(){
+  if(!GH){ghMsg("Connect first.");return}
+  ghMsg("Loading...");
+  api(FILE).then(function(r){if(r.status===404){ghMsg("No saved log in that repo yet.");return null}if(!r.ok)throw r;return r.json()}).then(function(j){
+    if(!j)return;var o=JSON.parse(unb64(j.content));if(!o||o.v!==2||!o.S)throw {status:0};
+    S=o.S;if(o.G)G=o.G;N=o.N||{};try{localStorage.setItem(KEY,JSON.stringify(S));localStorage.setItem("rb8g",JSON.stringify(G));localStorage.setItem("rb8n",JSON.stringify(N))}catch(e){}
+    location.reload()
+  }).catch(function(r){ghMsg(r&&r.status?ghErr(r):"Could not read the saved log.")})
+}
+if(GH){document.getElementById("ghr").value=GH.r;document.getElementById("ght").value=GH.t;ghMsg("Connected to "+GH.r+". Changes save automatically.")}
+document.getElementById("ghs").addEventListener("click",function(){
+  var r=document.getElementById("ghr").value.trim(),k=document.getElementById("ght").value.trim();
+  if(!/^[\w.-]+\/[\w.-]+$/.test(r)||!k){ghMsg("Enter owner/repo and the token.");return}
+  GH={r:r,t:k};try{localStorage.setItem("rb8gh",JSON.stringify(GH))}catch(e){}
+  api(FILE).then(function(x){
+    if(x.status===404)return push(true);if(!x.ok)throw x;
+    if(!Object.keys(S).length){ghLoad();return}
+    ghMsg("That repo already has a saved log. Tap Load from GitHub to use it, or make a change to overwrite it with this device's log.")
+  }).catch(function(x){ghMsg(x&&x.status?ghErr(x):"No connection.")})
+});
+document.getElementById("ghl").addEventListener("click",ghLoad);
+document.getElementById("ghx").addEventListener("click",function(){GH=null;try{localStorage.removeItem("rb8gh")}catch(e){}document.getElementById("ght").value="";ghMsg("Disconnected. Your log on this device is unchanged.")});
+function doUpdate(){var u=location.href.split("#")[0].split("?")[0];(window.caches?caches.keys().then(function(k){return Promise.all(k.map(function(c){return caches.delete(c)}))}):Promise.resolve()).catch(function(){}).then(function(){return fetch(u,{cache:"reload"})}).catch(function(){}).then(function(){location.reload()})}
+document.getElementById("upd").addEventListener("click",doUpdate);
+document.getElementById("updbar").addEventListener("click",function(e){e.preventDefault();doUpdate()});
+try{fetch(location.href.split("#")[0].split("?")[0],{cache:"no-store"}).then(function(r){return r.text()}).then(function(h){var m=/name="ver" content="([^"]+)"/.exec(h);if(m&&VER&&m[1]!==VER)document.getElementById("updbar").style.display="block"}).catch(function(){})}catch(e){}
 nudge();try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
 render();
 })();
