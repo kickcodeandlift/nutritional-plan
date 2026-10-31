@@ -74,6 +74,7 @@ li.hi b{color:var(--hi)}
 </head><body>
 <main>
 <header><h1>REBUILD <span>8</span></h1></header>
+<a id="bkbar" href="#backup" style="display:none;background:var(--hi);color:#fff;padding:10px 12px;margin:8px 0;text-decoration:none;font-weight:600"></a>
 <section class="ger"><h2>GER scale <small>how hard each set is</small></h2>
 <table><tbody>
 <tr><th>G7</th><td>4-6 reps in reserve. Feeder sets.</td></tr>
@@ -123,8 +124,8 @@ li.hi b{color:var(--hi)}
 <div class="chart" id="chart"></div>
 <p class="note">Line = kg (left axis). Bars = reps (right axis). Shaded band = prescribed rep range of the latest session.</p>
 <h3>Weight log</h3><div class="lt" id="logt"></div>
-<h3>Backup</h3><p class="note">Copy this text into Notes now and then.</p>
-<button id="exp" type="button" style="font:600 15px var(--disp);text-transform:uppercase;background:var(--accent);color:var(--bg);border:0;padding:8px 14px;cursor:pointer">Backup</button> <button id="imp" type="button" style="font:600 15px var(--disp);text-transform:uppercase;background:none;color:var(--fg);border:1px solid var(--line);padding:7px 14px;cursor:pointer">Restore</button> <span id="impm" class="note"></span>
+<h3 id="backup">Backup</h3><p class="note">Your log lives only on this phone, in this app or browser. Removing the Home Screen icon, clearing site data or switching browser deletes it. Tap Backup after each session and send it to Notes, Mail or WhatsApp. Restore puts it back.</p>
+<button id="exp" type="button" style="font:600 15px var(--disp);text-transform:uppercase;background:var(--accent);color:var(--bg);border:0;padding:8px 14px;cursor:pointer">Backup and share</button> <button id="imp" type="button" style="font:600 15px var(--disp);text-transform:uppercase;background:none;color:var(--fg);border:1px solid var(--line);padding:7px 14px;cursor:pointer">Restore</button> <span id="impm" class="note"></span>
 <textarea id="expt" aria-label="Backup text" placeholder="Backup: tap Backup, copy the text. Restore: paste a backup here, tap Restore." style="width:100%;box-sizing:border-box;height:120px;margin-top:8px;background:var(--bg);color:var(--fg);border:1px solid var(--line);font:13px var(--mono)"></textarea>
 </section>
 </main>
@@ -245,11 +246,21 @@ function setMode(m){mode=m;document.getElementById("mw").setAttribute("aria-pres
 document.getElementById("mw").addEventListener("click",function(){setMode("w")});
 document.getElementById("me").addEventListener("click",function(){setMode("e")});
 sel.addEventListener("change",function(){chart(sel.value)});
+function stamp(){try{localStorage.setItem("rb8last",String(Date.now()))}catch(e){}nudge()}
+function nudge(){
+  var bar=document.getElementById("bkbar"),has=Object.keys(S).length,last=0;
+  try{last=+localStorage.getItem("rb8last")||0}catch(e){}
+  var days=last?Math.floor((Date.now()-last)/864e5):-1;
+  if(has&&(days<0||days>=2)){bar.style.display="block";bar.textContent=days<0?"Not backed up yet. Tap to back up your log.":"Last backup "+days+" days ago. Tap to back up.";}else bar.style.display="none";
+}
 document.getElementById("exp").addEventListener("click",function(){
-  var ta=document.getElementById("expt"),has=Object.keys(S).length||Object.keys(N).length;
+  var ta=document.getElementById("expt"),has=Object.keys(S).length||Object.keys(N).length,m=document.getElementById("impm");
   ta.value=has?"REBUILD8:"+JSON.stringify({v:2,S:S,G:G,N:N}):"Nothing logged yet.";ta.focus();ta.select();
+  if(!has){m.textContent="";return}
+  var done=function(msg){m.textContent=msg;stamp()};
   try{navigator.clipboard.writeText(ta.value).catch(function(){})}catch(e){}
-  document.getElementById("impm").textContent=has?"Copied. Paste it somewhere safe.":"";
+  if(navigator.share){navigator.share({title:"REBUILD 8 backup",text:ta.value}).then(function(){done("Backup sent.")}).catch(function(){done("Copied. Paste it somewhere safe.")})}
+  else done("Copied. Paste it somewhere safe.");
 });
 document.getElementById("imp").addEventListener("click",function(){
   var m=document.getElementById("impm"),x=document.getElementById("expt").value.trim();
@@ -262,6 +273,7 @@ document.getElementById("imp").addEventListener("click",function(){
   save();location.reload();
 });
 gbar();fills.forEach(function(f){f()});
+nudge();try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
 render();
 })();
 </script></body></html>
